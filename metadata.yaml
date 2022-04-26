@@ -1,5 +1,5 @@
 homepage: "https://blitzllama.com/"
 documentation: "https://documentation.blitzllama.com/"
 versions:
-  - sha: 86b6b8c4c437f8d0823ce2abfee5bdb7976bacc3
+  - sha: 5a6fcde58423ae0565b65e4af481a5a8d9447867
     changeNotes: Initial release.
