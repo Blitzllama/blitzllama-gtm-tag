@@ -1,7 +1,7 @@
 homepage: "https://blitzllama.com/"
 documentation: "https://documentation.blitzllama.com/"
 versions:
-  - sha:
+  - sha: 851ff635a6599a36ba1781b64323f14c0dcefd0f
     changeNotes: Add Trigger Survey functionality
   - sha: 1f3fd777221b3349cff3da02fcb2dce391553622
     changeNotes: Add attribute functionality
