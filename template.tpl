@@ -48,15 +48,19 @@ ___TEMPLATE_PARAMETERS___
  {
     "type": "GROUP",
     "name": "actionGroup",
-    "displayName": "Action Type",
+    "displayName": "Choose Action Type",
     "groupStyle": "NO_ZIPPY",
     "subParams": [
       {
         "type": "SELECT",
         "name": "actionsMenu",
-        "displayName": "",
+        "displayName": "Action Type",
         "macrosInSelect": false,
         "selectItems": [
+          {
+            "value": "install",
+            "displayValue": "Install"
+          },
           {
             "value": "user_id",
             "displayValue": "User Id"
@@ -64,7 +68,11 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "attribute",
             "displayValue": "User Attribute"
-          }
+          },
+          {
+            "value": "trigger",
+            "displayValue": "Trigger Survey"
+          },
         ],
         "simpleValueType": true
       }
@@ -147,7 +155,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "TEXT",
         "name": "userId",
-        "displayName": "",
+        "displayName": "UserId value",
         "simpleValueType": true,
         "valueValidators": [
           {
@@ -160,6 +168,32 @@ ___TEMPLATE_PARAMETERS___
       {
         "paramName": "actionsMenu",
         "paramValue": "user_id",
+        "type": "EQUALS"
+      }
+    ]
+  },
+  {
+    "type": "GROUP",
+    "name": "triggerGroup",
+    "displayName": "Trigger Survey",
+    "groupStyle": "NO_ZIPPY",
+    "subParams": [
+      {
+        "type": "TEXT",
+        "name": "trigger_name",
+        "displayName": "Trigger Name",
+        "simpleValueType": true,
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          }
+        ]
+      }
+    ],
+    "enablingConditions": [
+      {
+        "paramName": "actionsMenu",
+        "paramValue": "trigger",
         "type": "EQUALS"
       }
     ]
@@ -177,16 +211,24 @@ const logToConsole = require('logToConsole');
 const url = "https://cdn.blitzllama.com/js/blitz.js";
 
 const action = () => {
-  callInWindow('_blitzQueue.push', ['init', data.api_key]);
+  if(data){
+    if(data.api_key){
+      callInWindow('_blitzQueue.push', ['init', data.api_key]);
+    }
 
-  if (data.actionsMenu === 'user_id') {
-    callInWindow('_blitzQueue.push', ['createUser', data.userId]);
-    logToConsole('user_id', data.userId, data);
-  } else if (data.actionsMenu === 'attribute') {
-    callInWindow('_blitzQueue.push', ['setUserAttribute', data.attribute_name, data.attribute_value, data.data_type]);
-    logToConsole('attribute', data);
-  } 
-  data.gtmOnSuccess();
+    if (data.actionsMenu === 'user_id' && data.userId) {
+      const user_id = data.userId.toString();
+      callInWindow('_blitzQueue.push', ['createUser', user_id]);
+      logToConsole('user_id', data.userId, data);
+    } else if (data.actionsMenu === 'attribute' && data.attribute_name) {
+      callInWindow('_blitzQueue.push', ['setUserAttribute', data.attribute_name, data.attribute_value, data.data_type]);
+      logToConsole('attribute', data);
+    }  else if (data.actionsMenu === 'trigger' && data.trigger_name) {
+      callInWindow('_blitzQueue.push', ['triggerEvent', data.trigger_name]);
+      logToConsole('attribute', data);
+    } 
+    data.gtmOnSuccess();
+  }
 };
 
 const onSetupSuccess = () => {
