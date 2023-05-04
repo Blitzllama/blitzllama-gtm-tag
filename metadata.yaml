@@ -1,6 +1,8 @@
 homepage: "https://blitzllama.com/"
 documentation: "https://documentation.blitzllama.com/sdk/google-tag-manager"
 versions:
+  - sha: 26258e735b6946cbac2a236fa1e76a82320cb936
+    changeNotes: Add Survey Language functionality
   - sha: 851ff635a6599a36ba1781b64323f14c0dcefd0f
     changeNotes: Add Trigger Survey functionality
   - sha: 1f3fd777221b3349cff3da02fcb2dce391553622
