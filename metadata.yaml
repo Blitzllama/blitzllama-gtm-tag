@@ -1,5 +1,5 @@
 homepage: "https://blitzllama.com/"
-documentation: "https://documentation.blitzllama.com/"
+documentation: "https://documentation.blitzllama.com/sdk/google-tag-manager"
 versions:
   - sha: 851ff635a6599a36ba1781b64323f14c0dcefd0f
     changeNotes: Add Trigger Survey functionality
